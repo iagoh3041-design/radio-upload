@@ -5,7 +5,7 @@ async function enviarParaGitHubActions(nome, arquivo) {
     reader.onload = async () => {
       const base64 = btoa(reader.result);
 
-      const url = `https://api.github.com/repos/SEU_USUARIO/SEU_REPOSITORIO/actions/workflows/upload.yml/dispatches`;
+      const url = `https://api.github.com/repos/iagoh3041-design/radio-upload/actions/workflows/upload.yml/dispatches`;
 
       const response = await fetch(url, {
         method: 'POST',
