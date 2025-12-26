@@ -1,82 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Rádio Online</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>📻 Rádio Online</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      background: #111;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 30px;
-    }
-
-    h1 {
-      color: #00ffcc;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      background: #00ffcc;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #00ccaa;
-    }
-  </style>
+<style>
+body {
+  background: linear-gradient(135deg,#000,#111,#000);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+h1 { color:#00ffcc; }
+audio { width:100%; max-width:400px; margin:20px 0; }
+button {
+  padding:10px 20px;
+  margin:5px;
+  border:none;
+  border-radius:6px;
+  background:#00ffcc;
+  font-size:16px;
+  cursor:pointer;
+}
+button:hover { background:#00ccaa; }
+</style>
 </head>
 
 <body>
 
-  <h1>📻 Rádio Online</h1>
+<h1>📻 Rádio Online</h1>
+<p>Playlist automática • JBL • SA-MP</p>
 
-  <audio id="player" controls autoplay></audio>
+<audio id="player" controls autoplay></audio>
 
-  <br><br>
+<div>
+  <button onclick="anterior()">⏮</button>
+  <button onclick="proxima()">⏭</button>
+</div>
 
-  <button onclick="anterior()">⏮ Anterior</button>
-  <button onclick="proxima()">⏭ Próxima</button>
+<script>
+// 🎶 PLAYLIST
+const playlist = [
+  "musicas/musica1.mp3",
+  "musicas/musica2.mp3",
+  "musicas/musica3.mp3"
+];
 
-  <script>
-    // 🔥 PLAYLIST AUTOMÁTICA
-    const playlist = [
-      "musicas/musica1.mp3",
-      "musicas/musica2.mp3",
-      "musicas/musica3.mp3"
-    ];
+let index = 0;
+const player = document.getElementById("player");
 
-    let indice = 0;
-    const player = document.getElementById("player");
+function tocar(){
+  player.src = playlist[index];
+  player.play();
+}
 
-    function tocar() {
-      player.src = playlist[indice];
-      player.play();
-    }
+function proxima(){
+  index = (index + 1) % playlist.length;
+  tocar();
+}
 
-    function proxima() {
-      indice = (indice + 1) % playlist.length;
-      tocar();
-    }
+function anterior(){
+  index = (index - 1 + playlist.length) % playlist.length;
+  tocar();
+}
 
-    function anterior() {
-      indice = (indice - 1 + playlist.length) % playlist.length;
-      tocar();
-    }
-
-    // quando acabar a música → próxima
-    player.addEventListener("ended", proxima);
-
-    // inicia
-    tocar();
-  </script>
+player.addEventListener("ended", proxima);
+tocar();
+</script>
 
 </body>
 </html>
