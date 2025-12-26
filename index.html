@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Radio JBL - Funcional</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>📻 Rádio JBL</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Radio JBL - Upload de Músicas</h1>
-    <form id="uploadForm">
-      <input type="file" id="arquivos" multiple accept="audio/*" required>
-      <button type="submit">Enviar</button>
-    </form>
-    <div id="resultado"></div>
-    <h2>Playlist</h2>
-    <div id="listaArquivos" class="playlist"></div>
-  </div>
 
-  <script src="script.js"></script>
+<div class="radio">
+    <h1>📻 Rádio JBL</h1>
+    <audio id="player" controls autoplay></audio>
+    <p id="now">▶️ Tocando...</p>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
