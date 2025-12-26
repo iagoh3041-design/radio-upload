@@ -1,18 +1,82 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>📻 Rádio JBL</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Rádio Online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #00ffcc;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #00ccaa;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="radio">
-    <h1>📻 Rádio JBL</h1>
-    <audio id="player" controls autoplay></audio>
-    <p id="now">▶️ Tocando...</p>
-</div>
+  <h1>📻 Rádio Online</h1>
 
-<script src="script.js"></script>
+  <audio id="player" controls autoplay></audio>
+
+  <br><br>
+
+  <button onclick="anterior()">⏮ Anterior</button>
+  <button onclick="proxima()">⏭ Próxima</button>
+
+  <script>
+    // 🔥 PLAYLIST AUTOMÁTICA
+    const playlist = [
+      "musicas/musica1.mp3",
+      "musicas/musica2.mp3",
+      "musicas/musica3.mp3"
+    ];
+
+    let indice = 0;
+    const player = document.getElementById("player");
+
+    function tocar() {
+      player.src = playlist[indice];
+      player.play();
+    }
+
+    function proxima() {
+      indice = (indice + 1) % playlist.length;
+      tocar();
+    }
+
+    function anterior() {
+      indice = (indice - 1 + playlist.length) % playlist.length;
+      tocar();
+    }
+
+    // quando acabar a música → próxima
+    player.addEventListener("ended", proxima);
+
+    // inicia
+    tocar();
+  </script>
+
 </body>
 </html>
