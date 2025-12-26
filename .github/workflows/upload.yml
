@@ -1,0 +1,35 @@
+name: Upload Música
+
+on:
+  workflow_dispatch:
+    inputs:
+      filename:
+        description: 'Nome do arquivo'
+        required: true
+      content:
+        description: 'Conteúdo Base64'
+        required: true
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Criar pasta uploads
+        run: mkdir -p uploads
+
+      - name: Salvar arquivo
+        run: |
+          echo "${{ github.event.inputs.content }}" | base64 --decode > uploads/${{ github.event.inputs.filename }}
+
+      - name: Commit e push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add uploads/${{ github.event.inputs.filename }}
+          git commit -m "Upload ${{ github.event.inputs.filename }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
