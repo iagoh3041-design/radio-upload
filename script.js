@@ -3,8 +3,8 @@ const resultado = document.getElementById('resultado');
 const listaArquivos = document.getElementById('listaArquivos');
 
 // === CONFIGURAÇÕES GITHUB ===
-const GITHUB_USER = 'SEU_USUARIO';        // substitua pelo seu usuário GitHub
-const GITHUB_REPO = 'SEU_REPOSITORIO';    // substitua pelo nome do repositório
+const GITHUB_USER = 'iagoh3041-design;        // substitua pelo seu usuário GitHub
+const GITHUB_REPO = 'radio-upload';    // substitua pelo nome do repositório
 const GITHUB_TOKEN = 'SEU_TOKEN_AQUI';    // substitua pelo token
 const GITHUB_BRANCH = 'main';             // branch onde será feito commit
 
