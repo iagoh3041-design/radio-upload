@@ -1,33 +1,53 @@
-async function enviarParaGitHubActions(nome, arquivo) {
-  const reader = new FileReader();
+const form = document.getElementById('uploadForm');
+const resultado = document.getElementById('resultado');
+const listaArquivos = document.getElementById('listaArquivos');
 
-  return new Promise((resolve, reject) => {
-    reader.onload = async () => {
-      const base64 = btoa(reader.result);
+function criarCard(nome, url, tipo) {
+  const card = document.createElement('div');
+  card.className = 'card';
 
-      const url = `https://api.github.com/repos/iagoh3041-design/radio-upload/actions/workflows/upload.yml/dispatches`;
+  const img = document.createElement('img');
+  img.src = 'https://i.ibb.co/7yz5NQ6/music-icon.png';
+  img.alt = 'Música';
 
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Authorization': `token SEU_TOKEN_PARA_DISPATCH`,
-          'Accept': 'application/vnd.github+json'
-        },
-        body: JSON.stringify({
-          ref: "main",
-          inputs: {
-            filename: nome,
-            content: base64
-          }
-        })
-      });
+  const detalhes = document.createElement('div');
+  detalhes.className = 'card-details';
+  detalhes.innerHTML = `
+    <a href="${url}" target="_blank">${nome}</a>
+    <audio controls>
+      <source src="${url}" type="${tipo}">
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+  `;
 
-      if (response.ok) {
-        resolve(`Arquivo ${nome} enviado com sucesso!`);
-      } else {
-        reject(await response.json());
-      }
-    };
-    reader.readAsBinaryString(arquivo);
-  });
+  card.appendChild(img);
+  card.appendChild(detalhes);
+  listaArquivos.appendChild(card);
 }
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const arquivosInput = document.getElementById('arquivos');
+  const arquivos = arquivosInput.files;
+
+  if (arquivos.length === 0) { alert('Selecione pelo menos um arquivo!'); return; }
+
+  resultado.innerHTML = 'Enviando...';
+
+  for (let i = 0; i < arquivos.length; i++) {
+    const arquivo = arquivos[i];
+    const formData = new FormData();
+    formData.append('file', arquivo);
+
+    try {
+      const response = await fetch('https://file.io/?expires=1w', { method: 'POST', body: formData });
+      const data = await response.json();
+      if (data.success) {
+        criarCard(arquivo.name, data.link, arquivo.type);
+      } else { alert(`Erro ao enviar: ${arquivo.name}`); }
+    } catch (err) { alert(`Erro ao enviar: ${arquivo.name}`); console.error(err); }
+  }
+
+  resultado.innerHTML = 'Upload concluído!';
+  arquivosInput.value = '';
+});
